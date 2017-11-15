@@ -2,7 +2,7 @@
 * Create the my_guitar_shop1 database
 *****************************************/
 
-USE bcn3_proj;  -- MySQL command
+USE at358;  -- MySQL command
 
 -- create the tables
 CREATE TABLE categories (
