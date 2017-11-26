@@ -1,16 +1,27 @@
 <?php
-function get_products_by_category($category_id) {
-    global $db;
+class ProductDB {
+    public static function get_products_by_category($category_id) {
+    $db = Database::getDB();
+    
+    $category = CategoryDB::getCategory($category_id) {
+    global $db;     
     $query = 'SELECT * FROM products
               WHERE products.categoryID = :category_id
               ORDER BY productID';
     $statement = $db->prepare($query);
     $statement->bindValue(":category_id", $category_id);
     $statement->execute();
-    $products = $statement->fetchAll();
+    $rows = $statement->fetchAll();
     $statement->closeCursor();
+        
+    foreach($rows as $row) {
+        $product = new Product($category, $row['productCode'], $row['productName'], $row['listPrice']);
+        $product->setId($row['productID']);
+        $products[] = $product;
+    }
     return $products;
-}
+}    
+
 
 function get_product($product_id) {
     global $db;
@@ -21,6 +32,8 @@ function get_product($product_id) {
     $statement->execute();
     $product = $statement->fetch();
     $statement->closeCursor();
+    
+    
     return $product;
 }
 
