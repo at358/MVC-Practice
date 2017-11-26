@@ -1,22 +1,24 @@
 <?php
-	$username = 'at358';
-	$password = 'Krishna15';
-	$hostname = 'sql1.njit.edu';
-	$dsn = "mysql:host=$hostname;dbname=$username";
-		try {
-			$conn = new PDO($dsn, $username, $password);
-    			echo "Connected successfully<br>";
+class Database {
+	private static $username = 'at358';
+	private static $password = 'Krishna15';
+	private static $hostname = 'sql1.njit.edu';
+	private static $dsn = "mysql:host=$hostname;dbname=$username";
+	
+	private function _construct() {}
+		
+	public static function getDB() {
+		if(!isset(self::$db)) {
+			try {
+			self::$db = new PDO(self::$dsn, self::$username, self::$password);
+    			
+			} catch(PDOException $e) {
+    				$error_message = $e->getMessage();
+				include('../errors/database_error.php');
+				exit();
+			}
 		}
-?>
-<?php
-	 catch(PDOException $e) {
-    	echo "Connection failed: " . $e->getMessage();
-	$conn = null;
+		return self::$db;
 	}
-	
-?>
-	}
-	
-       
-    }
+}
 ?>
