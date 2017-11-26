@@ -8,15 +8,11 @@
     	echo "Connected successfully<br>";
 	} 
         catch(PDOException $e) {
-    	echo "Connection failed: " . $e->getMessage();
-	$conn = null;
-	}
-	
-	?>
-        $db = new PDO($dsn, $username, $password);
-    } catch (PDOException $e) {
-        $error_message = $e->getMessage();
+    	$error_message = $e->getMessage();
         include('../errors/database_error.php');
         exit();
+	}
+	
+       
     }
 ?>
